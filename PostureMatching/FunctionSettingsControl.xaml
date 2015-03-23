@@ -1,0 +1,209 @@
+﻿<UserControl x:Class="PostureMatching.FunctionSettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="215" d:DesignWidth="680" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="MediumGreyBrush" Color="#ff6e6e6e"/>
+        <SolidColorBrush x:Key="KinectBlueBrush" Color="#ff00BCF2"/>
+        <SolidColorBrush x:Key="KinectPurpleBrush" Color="#ff52318f"/>
+
+        <Style TargetType="{x:Type RadioButton}" x:Key="KinectRadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                            <Grid x:Name="RadioButtonChecked">
+                                <Image x:Name="CheckedNormal" Source="Images\RadioCheckedNormal.png" Stretch="None" HorizontalAlignment="Center"/>
+                                <Image x:Name="CheckedHover" Source="Images\RadioCheckedHover.png" Stretch="None" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                            </Grid>
+                            <Grid x:Name="RadioButtonUnchecked" Visibility="Collapsed">
+                                <Image x:Name="UncheckedNormal" Source="Images\RadioUncheckedNormal.png" Stretch="None" HorizontalAlignment="Center"/>
+                                <Image x:Name="UncheckedHover" Source="Images\RadioUncheckedHover.png" Stretch="None" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                            </Grid>
+                            <TextBlock x:Name="RadioButtonText" Text="{TemplateBinding Content}" TextAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource KinectPurpleBrush}" FontSize="15" Margin="5 0 0 0"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="RadioButtonChecked"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="RadioButtonUnchecked"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="CheckedNormal"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="UncheckedNormal"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="CheckedHover"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="UncheckedHover"/>
+                                <Setter Property="Foreground" Value="{StaticResource KinectBlueBrush}" TargetName="RadioButtonText"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}" x:Key="KinectCheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <Grid x:Name="CheckBoxChecked">
+                                    <Image x:Name="CheckedNormal" Source="Images\CheckedNormal.png" Stretch="None" HorizontalAlignment="Center"/>
+                                    <Image x:Name="CheckedHover" Source="Images\CheckedHover.png" Stretch="None" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                                </Grid>
+                                <Grid x:Name="CheckBoxUnchecked" Visibility="Collapsed">
+                                    <Image x:Name="UncheckedNormal" Source="Images\UncheckedNormal.png" Stretch="None" HorizontalAlignment="Center"/>
+                                    <Image x:Name="UncheckedHover" Source="Images\UncheckedHover.png" Stretch="None" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                                </Grid>
+                                <TextBlock x:Name="CheckBoxText" Text="{TemplateBinding Content}" TextAlignment="Left"  VerticalAlignment="Center" Foreground="{StaticResource KinectPurpleBrush}" FontSize="15"  Margin="9,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="CheckBoxChecked"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="CheckBoxUnchecked"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="CheckedNormal"/>
+                                <Setter Property="Visibility" Value="Collapsed" TargetName="UncheckedNormal"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="CheckedHover"/>
+                                <Setter Property="Visibility" Value="Visible" TargetName="UncheckedHover"/>
+                                <Setter Property="Foreground" Value="{StaticResource KinectBlueBrush}" TargetName="CheckBoxText"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SliderRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Rectangle Fill="Transparent"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HorizontalSliderThumbStyle" TargetType="{x:Type Thumb}">
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Width" Value="11"/>
+            <Setter Property="Foreground" Value="{StaticResource KinectPurpleBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Canvas SnapsToDevicePixels="true">
+                            <Border x:Name="Body" Width="11" Height="22" Background="{TemplateBinding Foreground}"/>
+                        </Canvas>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="KinectSlider" TargetType="{x:Type Slider}">
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource KinectPurpleBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Slider}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TickBar x:Name="Tick" Fill="{TemplateBinding Foreground}" Height="4" Placement="Top" Grid.Row="0" Visibility="Visible"/>
+                                <Border x:Name="TrackBackground" Background="{TemplateBinding Foreground}" CornerRadius="1" Height="4.0" Margin="5,0" Grid.Row="1" VerticalAlignment="center">
+                                    <Canvas Margin="-6,-1">
+                                        <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Height="4.0" Stroke="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" StrokeThickness="1.0" Visibility="Hidden"/>
+                                    </Canvas>
+                                </Border>
+                                <Track x:Name="PART_Track" Grid.Row="1">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Style="{StaticResource HorizontalSliderThumbStyle}"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Foreground" Value="{StaticResource KinectBlueBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource KinectBlueBrush}" TargetName="Thumb"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="KinectTextFormat" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+
+        <Style x:Key="KinectTextFormatTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="46"/>
+            <RowDefinition Height="46"/>
+            <RowDefinition Height="46"/>
+            <RowDefinition Height="46"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Background="{StaticResource KinectPurpleBrush}" Margin="-1 -1 -1 0">
+            <TextBlock Style="{StaticResource KinectTextFormat}" Foreground="White">Function Settings</TextBlock>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Margin="1 1 1 1" Orientation="Horizontal">
+            <CheckBox Style="{StaticResource KinectCheckBox}" VerticalAlignment="Center" Margin="10 10 70 10" Content="Near Mode" IsChecked="{Binding NearMode}" AutomationProperties.AutomationId="NearMode"/>
+            <CheckBox Style="{StaticResource KinectCheckBox}" VerticalAlignment="Center" Margin="10 10 70 10" Content="Checking" IsChecked="{Binding Checking}" AutomationProperties.AutomationId="Checking"/>
+            <CheckBox Style="{StaticResource KinectCheckBox}" VerticalAlignment="Center" Margin="10 10 70 10" Content="Mirror" IsChecked="{Binding Mirror}" AutomationProperties.AutomationId="Mirror"/>
+            <CheckBox Style="{StaticResource KinectCheckBox}" VerticalAlignment="Center" Margin="10 10 10 10" Content="Use Weight" IsChecked="{Binding UseWeight}" AutomationProperties.AutomationId="UseWeight"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Margin="1 1 1 1" Orientation="Horizontal">
+            <RadioButton Name="none" Style="{StaticResource KinectRadioButton}" Content="None" Margin="10 10 75 10" IsChecked="True" AutomationProperties.AutomationId="None" Checked="PlayingChecked"/>
+            <RadioButton Name="recording" Style="{StaticResource KinectRadioButton}" Content="Recording" Margin="10 10 50 10" IsChecked="False" AutomationProperties.AutomationId="Recording" Checked="PlayingChecked"/>
+            <RadioButton Name="playing" Style="{StaticResource KinectRadioButton}" Content="Playing" Margin="10 10 10 10" IsChecked="False" AutomationProperties.AutomationId="Playing" Checked="PlayingChecked"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Margin="1 1 1 1" Orientation="Horizontal">
+            <TextBlock TextAlignment="Left"  VerticalAlignment="Center" Foreground="{StaticResource KinectPurpleBrush}" FontSize="15"  Margin="9 0 20 0">Bones :</TextBlock>
+            <ComboBox Name="bonesCB" SelectedIndex="0" Height="25" Width="150" Margin="10 5 10 0" VerticalAlignment="Top"></ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Margin="1 1 1 1" Orientation="Horizontal">
+            <TextBlock TextAlignment="Left"  VerticalAlignment="Center" Foreground="{StaticResource KinectPurpleBrush}" FontSize="15"  Margin="9 0 20 0">Status :</TextBlock>
+            <TextBlock Name="statusTB" TextAlignment="Left"  VerticalAlignment="Center" FontSize="15" Margin="10 0 10 0" Text="{Binding Status}"></TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>
